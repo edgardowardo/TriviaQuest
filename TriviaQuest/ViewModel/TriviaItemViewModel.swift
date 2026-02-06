@@ -1,4 +1,5 @@
 import Observation
+import Foundation
 
 @Observable
 class TriviaItemViewModel: Identifiable {
@@ -23,4 +24,20 @@ class TriviaItemViewModel: Identifiable {
         isVisited = true
     }
     
+    var navigationTitle: String {
+        trivia.difficulty.rawValue.capitalized + " Question"
+    }
+    
+    var typeSystemImageName: String {
+        type.systemImageName
+    }
+}
+
+extension TriviaType {
+    var systemImageName: String {
+        switch self {
+        case .boolean: return "questionmark.circle"
+        case .multiple: return "list.number"
+        }
+    }
 }

@@ -8,7 +8,7 @@ struct TriviaListView: View {
         NavigationStack {
             List(vm.trivias) { t in
                 NavigationLink {
-                    Text(t.question)
+                    TriviaItemView(vm: t)
                 } label: {
                     HStack {
                         Image(systemName: t.difficulty.systemImageName)
@@ -20,10 +20,10 @@ struct TriviaListView: View {
                                 .foregroundStyle(.secondary)
                             
                             Text(t.question)
-                                .font(.headline)
                         }
                     }
                 }
+                .listRowBackground(t.rowBackgroundColor)
             }
             .navigationTitle(vm.navigationTitle)
             .refreshable {
@@ -41,6 +41,12 @@ struct TriviaListView: View {
             Text(error.localizedDescription)
         }
 
+    }
+}
+
+extension TriviaItemViewModel {
+    var rowBackgroundColor: Color {
+        isVisited ? .secondary.opacity(0.1) : .clear
     }
 }
 
@@ -65,4 +71,3 @@ extension TriviaDifficulty {
 #Preview {
     TriviaListView(vm: .init(api: TriviaAPI()))
 }
-
