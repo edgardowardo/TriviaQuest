@@ -28,7 +28,7 @@ enum TriviaCategory: String, Sendable {
 }
 
 extension TriviaCategory: Codable {
-    init(from decoder: Decoder) throws {
+    nonisolated init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
         let normalized = raw.replacingOccurrences(of: "&amp;", with: "&")
@@ -42,7 +42,7 @@ extension TriviaCategory: Codable {
         self = value
     }
 
-    func encode(to encoder: Encoder) throws {
+    nonisolated func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(self.rawValue.replacingOccurrences(of: "&", with: "&amp;"))
     }

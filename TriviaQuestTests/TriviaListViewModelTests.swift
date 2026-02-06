@@ -10,7 +10,7 @@ struct TriviaListViewModelTests {
     func testViewModelMapping() async {
         let data = StubData.sampleJSON.data(using: .utf8)!
         let session = getMockSession(from: data)
-        let api = await TriviaAPI(session: session)
+        let api = TriviaAPI(session: session)
         let sut = TriviaListViewModel(api: api)
         
         await sut.fetch()
@@ -27,7 +27,7 @@ struct TriviaListViewModelTests {
     func testRefreshErrorEmitted() async {
         let data = Data("invalid data".utf8)
         let session = getMockSession(from: data)
-        let api = await TriviaAPI(session: session)
+        let api = TriviaAPI(session: session)
         let sut = TriviaListViewModel(api: api)
         
         await sut.fetch()
@@ -41,7 +41,7 @@ struct TriviaListViewModelTests {
     func testSearchTextFilter() async {
         let data = StubData.sampleJSON.data(using: .utf8)!
         let session = getMockSession(from: data)
-        let api = await TriviaAPI(session: session)
+        let api = TriviaAPI(session: session)
         let sut = TriviaListViewModel(api: api)
         await sut.fetch()
         
@@ -54,7 +54,7 @@ struct TriviaListViewModelTests {
     func testDifficultyFilter() async {
         let data = StubData.sampleJSON.data(using: .utf8)!
         let session = getMockSession(from: data)
-        let api = await TriviaAPI(session: session)
+        let api = TriviaAPI(session: session)
         let sut = TriviaListViewModel(api: api)
         await sut.fetch()
         
@@ -67,7 +67,7 @@ struct TriviaListViewModelTests {
     func testCategoryFilter() async {
         let data = StubData.sampleJSON.data(using: .utf8)!
         let session = getMockSession(from: data)
-        let api = await TriviaAPI(session: session)
+        let api = TriviaAPI(session: session)
         let sut = TriviaListViewModel(api: api)
         await sut.fetch()
         

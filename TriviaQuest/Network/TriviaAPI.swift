@@ -9,7 +9,6 @@ actor NetworkActor {
     static let shared = NetworkActor()
 }
 
-@NetworkActor
 struct TriviaAPI: Sendable, TriviaAPIProviding {
     let baseURL: URL
     let session: URLSession
@@ -19,6 +18,7 @@ struct TriviaAPI: Sendable, TriviaAPIProviding {
         self.session = session
     }
     
+    @NetworkActor
     //https://opentdb.com/api.php?amount=15
     func fetch() async throws -> [TriviaItem] {
         let request = URLRequest(url: baseURL.appending(queryItems: [.init(name: "amount", value: "15")]))

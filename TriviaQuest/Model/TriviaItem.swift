@@ -23,7 +23,7 @@ extension TriviaItem: Codable {
         case type, difficulty, category, question, correctAnswer = "correct_answer", incorrectAnswers = "incorrect_answers"
     }
     
-    init(from decoder: Decoder) throws {
+    nonisolated init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         type = try c.decode(TriviaType.self, forKey: .type)
         difficulty = try c.decode(TriviaDifficulty.self, forKey: .difficulty)
@@ -33,7 +33,7 @@ extension TriviaItem: Codable {
         incorrectAnswers = try c.decode([String].self, forKey: .incorrectAnswers)
     }
     
-    func encode(to encoder: Encoder) throws {
+    nonisolated func encode(to encoder: Encoder) throws {
         var e = encoder.container(keyedBy: CodingKeys.self)
         try e.encode(type, forKey: .type)
         try e.encode(difficulty, forKey: .difficulty)

@@ -10,12 +10,12 @@ struct TriviaAPITests {
     func testFetchParsesCorrectly() async throws {
         let data = StubData.sampleJSON.data(using: .utf8)!
         let session = getMockSession(from: data)
-        let sut = await TriviaAPI(session: session)
+        let sut = TriviaAPI(session: session)
         let results = try await sut.fetch()
         
         #expect(results.contains(where: { $0.category == .film }))
-        #expect(await results.first?.category == .scienceAndNature)
-        #expect(await results.last?.category == .videoGames)
+        #expect(results.first?.category == .scienceAndNature)
+        #expect(results.last?.category == .videoGames)
         #expect(results.count == 15)
     }
     
@@ -23,7 +23,7 @@ struct TriviaAPITests {
     func testFetchThrowsOnInvalidData() async {
         let data = Data("invalid data".utf8)
         let session = getMockSession(from: data)
-        let sut = await TriviaAPI(session: session)
+        let sut = TriviaAPI(session: session)
         do {
             _ = try await sut.fetch()
             #expect(Bool(false), "Expected error but got none")
@@ -37,7 +37,7 @@ struct TriviaAPITests {
         // decode from mock session
         let data = StubData.sampleJSON.data(using: .utf8)!
         let session = getMockSession(from: data)
-        let sut = await TriviaAPI(session: session)
+        let sut = TriviaAPI(session: session)
         let result = try await sut.fetch()
         let triviaContainer: TriviaAPIResponse = .init(responseCode: 0, results: result)
         
@@ -55,3 +55,4 @@ struct TriviaAPITests {
         #expect(response.results.count == 15)
     }
 }
+
