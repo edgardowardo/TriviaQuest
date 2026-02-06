@@ -24,6 +24,13 @@ struct TriviaAPI: Sendable, TriviaAPIProviding {
         let request = URLRequest(url: baseURL.appending(queryItems: [.init(name: "amount", value: "15")]))
         let (data, _) = try await session.data(for: request)
         let response = try JSONDecoder().decode(TriviaAPIResponse.self, from: data)
-        return response.results
+
+        guard let results = response.results else {
+            // TODO: what is code 5?
+            print("decoding failed with responseCode: \(response.responseCode)")
+            return []
+        }
+
+        return results
     }
 }
