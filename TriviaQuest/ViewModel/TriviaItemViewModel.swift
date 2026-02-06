@@ -36,7 +36,7 @@ class TriviaItemViewModel: Identifiable {
 extension TriviaType {
     var systemImageName: String {
         switch self {
-        case .boolean: return "questionmark.circle"
+        case .boolean: return "checkmark.circle"
         case .multiple: return "list.number"
         }
     }
