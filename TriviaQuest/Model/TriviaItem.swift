@@ -4,7 +4,7 @@ enum TriviaType: String, Codable, Sendable {
     case multiple, boolean
 }
 
-enum TriviaDifficulty: String, Codable, Sendable {
+enum TriviaDifficulty: String, Codable, Sendable, CaseIterable {
     case easy, medium, hard
 }
 

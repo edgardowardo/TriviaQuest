@@ -43,6 +43,34 @@ struct TriviaListView: View {
             }
             
             .searchable(text: searchTextBinding)
+            
+            .toolbar {
+                ToolbarItem {
+                    Menu {
+                        Picker("Difficulty", selection: $vm.difficultyFilter) {
+                            Text("All difficulty")
+                                .tag(Optional<TriviaDifficulty>.none)
+                            ForEach(TriviaDifficulty.allCases, id: \.self) { d in
+                                Label(d.rawValue.capitalized, systemImage: d.systemImageName)
+                                    .tag(Optional(d))
+                            }
+                            
+                        }
+                        
+                        Picker("Category", selection: $vm.categoryFilter) {
+                            Text("All category")
+                                .tag(Optional<TriviaCategory>.none)
+                            ForEach(TriviaCategory.allCases, id: \.self) { c in
+                                Text(c.rawValue)
+                                    .tag(Optional(c))
+                            }
+                        }
+                    } label: {
+                        Label("Filters", systemImage: "line.3.horizontal.decrease")
+                    }
+                }
+            }
+                    
         }
 
         .task {

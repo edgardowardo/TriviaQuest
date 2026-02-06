@@ -1,6 +1,6 @@
 import Foundation
 
-enum TriviaCategory: String, Sendable {
+enum TriviaCategory: String, Sendable, CaseIterable {
     case generalKnowledge = "General Knowledge"
     case books = "Entertainment: Books"
     case film = "Entertainment: Film"
