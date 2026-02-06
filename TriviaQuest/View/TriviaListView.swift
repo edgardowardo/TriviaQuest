@@ -5,6 +5,16 @@ struct TriviaListView: View {
     @State var vm: TriviaListViewModel
     
     var body: some View {
+        
+        let searchTextBinding = Binding<String>(
+            get: { vm.searchText ?? "" },
+            set: { v in
+                withAnimation {
+                    vm.searchText = v.isEmpty ? nil : v
+                }
+            }
+        )
+
         NavigationStack {
             List(vm.trivias) { t in
                 NavigationLink {
@@ -25,10 +35,14 @@ struct TriviaListView: View {
                 }
                 .listRowBackground(t.rowBackgroundColor)
             }
+ 
             .navigationTitle(vm.navigationTitle)
+
             .refreshable {
                 await vm.fetch()
             }
+            
+            .searchable(text: searchTextBinding)
         }
 
         .task {
