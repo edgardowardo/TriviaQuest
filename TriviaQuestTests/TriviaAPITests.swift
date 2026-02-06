@@ -39,7 +39,7 @@ struct TriviaAPITests {
         let session = getMockSession(from: data)
         let sut = TriviaAPI(session: session)
         let result = try await sut.fetch()
-        let triviaContainer: TriviaAPIResponse = .init(responseCode: 0, results: result)
+        let triviaContainer: TriviaAPIResponse = .init(responseCode: 0, results: result, result: nil)
         
         // encode
         let jsonData = try JSONEncoder().encode(triviaContainer)
@@ -50,9 +50,9 @@ struct TriviaAPITests {
         let data2 = jsonString.data(using: .utf8)!
         let decoder = JSONDecoder()
         let response = try decoder.decode(TriviaAPIResponse.self, from: data2)
-        #expect(await response.results.first?.category == .scienceAndNature)
-        #expect(await response.results.last?.category == .videoGames)
-        #expect(response.results.count == 15)
+        #expect(await response.results?.first?.category == .scienceAndNature)
+        #expect(await response.results?.last?.category == .videoGames)
+        #expect(response.results?.count == 15)
     }
 }
 
