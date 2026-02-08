@@ -31,9 +31,8 @@ extension TriviaCategory: Codable {
     nonisolated init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let raw = try container.decode(String.self)
-        let normalized = raw.replacingOccurrences(of: "&amp;", with: "&")
 
-        guard let value = TriviaCategory(rawValue: normalized) else {
+        guard let value = TriviaCategory(rawValue: raw.attributedHTML) else {
             throw DecodingError.dataCorruptedError(
                 in: container,
                 debugDescription: "Unknown TriviaCategory: \(raw)"

@@ -21,11 +21,11 @@ struct TriviaListView: View {
                     TriviaItemView(vm: t)
                 } label: {
                     HStack {
-                        Image(systemName: t.difficulty.systemImageName)
-                            .foregroundStyle(t.difficulty.color)
+                        Image(systemName: t.statusImageName)
+                            .foregroundStyle(.secondary)
 
                         VStack(alignment: .leading) {
-                            Text(t.category.rawValue)
+                            Text(t.difficulty.rawValue.capitalized + ", " + t.category.rawValue)
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                             

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 enum TriviaType: String, Codable, Sendable {
     case multiple, boolean
@@ -28,9 +29,9 @@ extension TriviaItem: Codable {
         type = try c.decode(TriviaType.self, forKey: .type)
         difficulty = try c.decode(TriviaDifficulty.self, forKey: .difficulty)
         category = try c.decode(TriviaCategory.self, forKey: .category)
-        question = try c.decode(String.self, forKey: .question)
-        correctAnswer = try c.decode(String.self, forKey: .correctAnswer)
-        incorrectAnswers = try c.decode([String].self, forKey: .incorrectAnswers)
+        question = (try c.decode(String.self, forKey: .question)).attributedHTML
+        correctAnswer = (try c.decode(String.self, forKey: .correctAnswer)).attributedHTML
+        incorrectAnswers = (try c.decode([String].self, forKey: .incorrectAnswers)).map(\.attributedHTML)
     }
     
     nonisolated func encode(to encoder: Encoder) throws {
@@ -41,5 +42,19 @@ extension TriviaItem: Codable {
         try e.encode(question, forKey: .question)
         try e.encode(correctAnswer, forKey: .correctAnswer)
         try e.encode(incorrectAnswers, forKey: .incorrectAnswers)
+    }
+}
+
+extension String {
+    nonisolated var attributedHTML: String {
+        guard let data = self.data(using: .utf8) else { return self }
+        if let ns = try? NSAttributedString(
+            data: data,
+            options: [.documentType: NSAttributedString.DocumentType.html],
+            documentAttributes: nil
+        ) {
+            return ns.string
+        }
+        return self
     }
 }
