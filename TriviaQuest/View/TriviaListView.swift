@@ -35,7 +35,7 @@ struct TriviaListView: View {
                 }
                 .listRowBackground(t.rowBackgroundColor)
             }
- 
+            
             .navigationTitle(vm.navigationTitle)
 
             .refreshable {
@@ -45,19 +45,37 @@ struct TriviaListView: View {
             .searchable(text: searchTextBinding)
             
             .toolbar {
+
+                let difficultyFilterBinding = Binding<TriviaDifficulty?>(
+                    get: { vm.difficultyFilter },
+                    set: { v in
+                        withAnimation {
+                            vm.difficultyFilter = v
+                        }
+                    }
+                )
+                
+                let categoryFilterBinding = Binding<TriviaCategory?>(
+                    get: { vm.categoryFilter },
+                    set: { v in
+                        withAnimation {
+                            vm.categoryFilter = v
+                        }
+                    }
+                )
+                
                 ToolbarItem {
                     Menu {
-                        Picker("Difficulty", selection: $vm.difficultyFilter) {
+                        Picker("Difficulty", selection: difficultyFilterBinding) {
                             Text("All difficulty")
                                 .tag(Optional<TriviaDifficulty>.none)
                             ForEach(TriviaDifficulty.allCases, id: \.self) { d in
                                 Label(d.rawValue.capitalized, systemImage: d.systemImageName)
                                     .tag(Optional(d))
                             }
-                            
                         }
                         
-                        Picker("Category", selection: $vm.categoryFilter) {
+                        Picker("Category", selection: categoryFilterBinding) {
                             Text("All category")
                                 .tag(Optional<TriviaCategory>.none)
                             ForEach(TriviaCategory.allCases, id: \.self) { c in
